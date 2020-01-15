@@ -1,10 +1,18 @@
 // CRUD
 
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
+// const mongodb = require("mongodb");
+// const MongoClient = mongodb.MongoClient;
+// const ObjectID = mongodb.ObjectID;
+// In destructuring coding, we do like this :
+const { MongoClient, ObjectID } = require("mongodb");
 
 const connectionURL = "mongodb://127.0.0.1:27017";
 const databaseName = "task-manager";
+
+const id = new ObjectID();
+console.log(id.id.length);
+// console.log(id.getTimestamp());
+console.log(id.toHexString().length);
 
 MongoClient.connect(
   connectionURL,
@@ -19,8 +27,9 @@ MongoClient.connect(
 
     // db.collection("users").insertOne(
     //   {
-    //     name: "Gautier",
-    //     age: 28
+    //     _id: id,
+    //     name: "Jane",
+    //     age: 26
     //   },
     //   (error, result) => {
     //     // http://mongodb.github.io/node-mongodb-native/3.4/api/Collection.html#~insertOneWriteOpCallback
@@ -52,28 +61,28 @@ MongoClient.connect(
     //   }
     // );
 
-    db.collection("tasks").insertMany(
-      [
-        {
-          description: "Learn Node JS",
-          completed: false
-        },
-        {
-          description: "Empty trash kitchen",
-          completed: true
-        },
-        {
-          description: "Kiss Gratiane today",
-          completed: true
-        }
-      ],
-      (error, result) => {
-        if (error) {
-          console.log("Unable to insert task");
-        }
+    // db.collection("tasks").insertMany(
+    //   [
+    //     {
+    //       description: "Learn Node JS",
+    //       completed: false
+    //     },
+    //     {
+    //       description: "Empty trash kitchen",
+    //       completed: true
+    //     },
+    //     {
+    //       description: "Kiss Gratiane today",
+    //       completed: true
+    //     }
+    //   ],
+    //   (error, result) => {
+    //     if (error) {
+    //       console.log("Unable to insert task");
+    //     }
 
-        console.log(result.ops);
-      }
-    );
+    //     console.log(result.ops);
+    //   }
+    // );
   }
 );
