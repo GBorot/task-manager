@@ -55,5 +55,12 @@ MongoClient.connect(
       .toArray((error, tasks) => {
         console.log(tasks);
       });
+
+    db.collection("tasks")
+      .find({ completed: true })
+      .sort({ _id: -1 })
+      .toArray((error, tasks) => {
+        console.log(tasks);
+      });
   }
 );
