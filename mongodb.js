@@ -36,5 +36,11 @@ MongoClient.connect(
       .toArray((error, users) => {
         console.log(users);
       });
+
+    db.collection("users")
+      .find({ age: 28 })
+      .count((error, users) => {
+        console.log(users);
+      });
   }
 );
