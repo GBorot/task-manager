@@ -20,9 +20,20 @@ MongoClient.connect(
     // console.log("Connected correctly");
     const db = client.db(databaseName);
 
-    db.collection("users")
-      .deleteMany({
-        age: 28
+    // db.collection("users")
+    //   .deleteMany({
+    //     age: 28
+    //   })
+    //   .then(result => {
+    //     console.log(result);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+
+    db.collection("tasks")
+      .deleteOne({
+        _id: new ObjectID("5e1f183fee0e66bdaa7d6fb1")
       })
       .then(result => {
         console.log(result);
