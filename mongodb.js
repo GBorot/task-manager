@@ -20,47 +20,5 @@ MongoClient.connect(
     // console.log("Connected correctly");
     const db = client.db(databaseName);
 
-    // db.collection("users").findOne(
-    //   { _id: new ObjectID("5e1ee1975effc6b89c164221") },
-    //   (error, user) => {
-    //     if (error) {
-    //       console.log("Unable to fetch");
-    //     }
-
-    //     console.log(user);
-    //   }
-    // );
-
-    // db.collection("users")
-    //   .find({ age: 28 })
-    //   .toArray((error, users) => {
-    //     console.log(users);
-    //   });
-
-    // db.collection("users")
-    //   .find({ age: 28 })
-    //   .count((error, users) => {
-    //     console.log(users);
-    //   });
-
-    db.collection("tasks").findOne(
-      { _id: new ObjectID("5e1f183fee0e66bdaa7d6fb3") },
-      (error, task) => {
-        console.log(task);
-      }
-    );
-
-    db.collection("tasks")
-      .find({ completed: true })
-      .toArray((error, tasks) => {
-        console.log(tasks);
-      });
-
-    db.collection("tasks")
-      .find({ completed: true })
-      .sort({ _id: -1 })
-      .toArray((error, tasks) => {
-        console.log(tasks);
-      });
-  }
+    
 );
