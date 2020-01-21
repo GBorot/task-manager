@@ -8,13 +8,15 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// all HTTP status : https://httpstatuses.com/
+
 app.post("/users", (req, res) => {
   const user = new User(req.body);
 
   user
     .save()
     .then(() => {
-      res.send(user);
+      res.status(201).send(user);
     })
     .catch(e => {
       res.status(400).send(e);
@@ -27,7 +29,7 @@ app.post("/tasks", (req, res) => {
   task
     .save()
     .then(() => {
-      res.send(task);
+      res.status(201).send(task);
     })
     .catch(e => {
       res.status(400).send(e);
