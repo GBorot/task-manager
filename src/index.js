@@ -8,6 +8,12 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+const router = new express.Router();
+router.get("/test", (req, res) => {
+  res.send("This is from my other router");
+});
+app.use(router);
+
 // all HTTP status : https://httpstatuses.com/
 
 app.get("/users", async (req, res) => {
