@@ -1,7 +1,7 @@
 require("../src/db/mongoose");
 const Task = require("../src/models/task");
 
-Task.findByIdAndRemove("5e26ff15ef8b7174fe96c736")
+Task.findByIdAndDelete("5e26ff9aef8b7174fe96c738")
   .then(task => {
     console.log(task);
     return Task.countDocuments({ completed: false });
