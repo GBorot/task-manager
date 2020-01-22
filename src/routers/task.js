@@ -1,45 +1,46 @@
 const express = require("express");
-const User = require("../models/user");
+const Task = require("../models/task");
 const router = new express.Router();
 
-router.get("/users", async (req, res) => {
+router.get("/tasks", async (req, res) => {
   try {
-    const users = await User.find({});
-    res.send(users);
+    const tasks = await Task.find({});
+    res.send(tasks);
   } catch (e) {
     res.status(500).send();
   }
 });
 
-router.post("/users", async (req, res) => {
-  const user = new User(req.body);
+router.post("/tasks", async (req, res) => {
+  const task = new Task(req.body);
 
   try {
-    await user.save();
-    res.status(201).send(user);
+    await task.save();
+    res.status(201).send(task);
   } catch (e) {
-    res.status(400).send(e);
+    res.status(400).send();
   }
 });
 
-router.get("/users/:id", async (req, res) => {
+router.get("/tasks/:id", async (req, res) => {
   const _id = req.params.id;
 
   try {
-    const user = await User.findById(_id);
-    if (!user) {
+    const task = await Task.findById(_id);
+
+    if (!task) {
       return res.status(404).send();
     }
 
-    res.send(user);
+    res.send(task);
   } catch (e) {
     res.status(500).send();
   }
 });
 
-router.patch("/users/:id", async (req, res) => {
+router.patch("/tasks/:id", async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["name", "email", "password", "age"];
+  const allowedUpdates = ["description", "completed"];
   const isValidOperation = updates.every(update => {
     return allowedUpdates.includes(update);
   });
@@ -49,30 +50,30 @@ router.patch("/users/:id", async (req, res) => {
   }
 
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     });
 
-    if (!user) {
+    if (!task) {
       res.status(404).send();
     }
 
-    res.send(user);
+    res.send(task);
   } catch (e) {
     res.status(400).send(e);
   }
 });
 
-router.delete("/users/:id", async (req, res) => {
+router.delete("/tasks/:id", async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const task = await Task.findByIdAndDelete(req.params.id);
 
-    if (!user) {
+    if (!task) {
       res.status(404).send();
     }
 
-    res.send(user);
+    res.send(task);
   } catch (e) {
     res.status(500).send();
   }
