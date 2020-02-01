@@ -15,3 +15,21 @@ app.use(taskRouter);
 app.listen(port, () => {
   console.log("Server is up on port " + port);
 });
+
+const bcrypt = require("bcryptjs");
+
+const myFunction = async () => {
+  const password = "Red1234567!";
+
+  // 8 rounds seems to be great to encode passwords
+  const hashedPassword = await bcrypt.hash(password, 8);
+
+  console.log(password);
+  console.log(hashedPassword);
+
+  const isMatch = await bcrypt.compare("Red1234567!", hashedPassword);
+
+  console.log(isMatch);
+};
+
+myFunction();
