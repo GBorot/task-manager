@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -45,7 +46,9 @@ userSchema.pre("save", async function(next) {
   // this gives access to the user before being stored
   const user = this;
 
-  console.log("just before saving!");
+  if (user.isModified("password")) {
+    user.password = await bcrypt.hash(user.password, 8);
+  }
 
   next();
 });
