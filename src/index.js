@@ -16,20 +16,18 @@ app.listen(port, () => {
   console.log("Server is up on port " + port);
 });
 
-const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const myFunction = async () => {
-  const password = "Red1234567!";
+  const token = jwt.sign({ _id: "abc123" }, "thisismylog", {
+    expiresIn: "7 days"
+  });
 
-  // 8 rounds seems to be great to encode passwords
-  const hashedPassword = await bcrypt.hash(password, 8);
+  console.log(token);
 
-  console.log(password);
-  console.log(hashedPassword);
+  const data = jwt.verify(token, "thisismylog");
 
-  const isMatch = await bcrypt.compare("Red1234567!", hashedPassword);
-
-  console.log(isMatch);
+  console.log(data);
 };
 
 myFunction();
