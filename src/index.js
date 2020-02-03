@@ -16,13 +16,7 @@ const port = process.env.PORT || 3000;
 // });
 
 app.use((req, res, next) => {
-  if (req.method) {
-    res
-      .status(503)
-      .send("Please try again later, the app is in maintenance...");
-  } else {
-    next();
-  }
+  res.status(503).send("Please try again later, the app is in maintenance...");
 });
 
 app.use(express.json());
