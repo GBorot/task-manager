@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
-const User = mongoose.model("User", {
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -39,5 +39,17 @@ const User = mongoose.model("User", {
     }
   }
 });
+
+// arrow function don't bind THIS instead of standard functions do
+userSchema.pre("save", async function(next) {
+  // this gives access to the user before being stored
+  const user = this;
+
+  console.log("just before saving!");
+
+  next();
+});
+
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

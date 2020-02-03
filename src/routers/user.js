@@ -49,10 +49,20 @@ router.patch("/users/:id", async (req, res) => {
   }
 
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
+    // the update method bypasses the mongoose process so we have to do it the old wqy
+    const user = await User.findById(req.params.id);
+
+    updates.forEach(update => {
+      // updates is an array of string so we try to update dynamically
+      user[update] = req.body[update];
     });
+
+    await user.save();
+
+    // const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    //   new: true,
+    //   runValidators: true
+    // });
 
     if (!user) {
       res.status(404).send();
