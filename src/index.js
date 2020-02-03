@@ -17,7 +17,9 @@ const port = process.env.PORT || 3000;
 
 app.use((req, res, next) => {
   if (req.method) {
-    res.send("Please try again later, the app is in maintenance...");
+    res
+      .status(503)
+      .send("Please try again later, the app is in maintenance...");
   } else {
     next();
   }
