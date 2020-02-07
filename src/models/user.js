@@ -52,6 +52,14 @@ const userSchema = new mongoose.Schema({
 });
 
 // ---------------------------------------------------------------
+// Virtual property to link user and task
+userSchema.virtual("tasks", {
+  ref: "Task",
+  localField: "_id",
+  foreignField: "owner"
+});
+
+// ---------------------------------------------------------------
 // User authetification (instance method)
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
