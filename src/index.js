@@ -28,3 +28,13 @@ app.use(taskRouter);
 app.listen(port, () => {
   console.log("Server is up on port " + port);
 });
+
+const Task = require("./models/task");
+const main = async () => {
+  const task = await Task.findById("5e3d853ff01e140d570030bb");
+  // going to link user profile to task, we search by owner
+  await task.populate("owner").execPopulate();
+  console.log(task.owner);
+};
+
+main();
