@@ -59,7 +59,7 @@ router.get("/users/me", auth, async (req, res) => {
   res.send(req.user);
 });
 
-router.patch("/users/:id", async (req, res) => {
+router.patch("/users/me", auth, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ["name", "email", "password", "age"];
   const isValidOperation = updates.every(update => {
@@ -71,26 +71,14 @@ router.patch("/users/:id", async (req, res) => {
   }
 
   try {
-    // the update method bypasses the mongoose process so we have to do it the old wqy
-    const user = await User.findById(req.params.id);
-
     updates.forEach(update => {
       // updates is an array of string so we try to update dynamically
-      user[update] = req.body[update];
+      req.user[update] = req.body[update];
     });
 
-    await user.save();
+    await req.user.save();
 
-    // const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-    //   new: true,
-    //   runValidators: true
-    // });
-
-    if (!user) {
-      res.status(404).send();
-    }
-
-    res.send(user);
+    res.send(req.user);
   } catch (e) {
     res.status(400).send(e);
   }
@@ -98,13 +86,9 @@ router.patch("/users/:id", async (req, res) => {
 
 router.delete("/users/me", auth, async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.user._id);
+    await req.user.remove();
 
-    if (!user) {
-      res.status(404).send();
-    }
-
-    res.send(user);
+    res.send(req.user);
   } catch (e) {
     res.status(500).send();
   }
