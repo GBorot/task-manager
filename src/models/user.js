@@ -64,6 +64,10 @@ userSchema.methods.generateAuthToken = async function() {
 };
 
 // ---------------------------------------------------------------
+// It seems like
+// 'method' adds an instance method to documents constructed from Models
+// whereas
+// 'static' adds static "class" methods to the Models itself
 // Credentials
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
