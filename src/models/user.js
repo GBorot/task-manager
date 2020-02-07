@@ -63,6 +63,16 @@ userSchema.methods.generateAuthToken = async function() {
   return token;
 };
 
+userSchema.methods.getPublicProfile = function() {
+  const user = this;
+  const userObject = user.toObject();
+
+  delete userObject.password;
+  delete userObject.tokens;
+
+  return userObject;
+};
+
 // ---------------------------------------------------------------
 // It seems like
 // 'method' adds an instance method to documents constructed from Models
