@@ -1,8 +1,9 @@
 const express = require("express");
 const User = require("../models/user");
+const multer = require("multer");
+const sharp = require("sharp");
 const auth = require("../middleware/auth");
 const router = new express.Router();
-const multer = require("multer");
 
 router.post("/users", async (req, res) => {
   const user = new User(req.body);
@@ -114,7 +115,12 @@ router.post(
   auth,
   upload.single("avatar"),
   async (req, res) => {
-    req.user.avatar = req.file.buffer;
+    const buffer = await sharp(req.file.buffer)
+      .resize({ width: 250, height: 250 })
+      .png()
+      .toBuffer();
+
+    req.user.avatar = buffer;
     await req.user.save();
 
     res.send();
@@ -140,7 +146,7 @@ router.get("/users/:id/avatar", async (req, res) => {
     }
 
     // we have to tell what type of data we are sending, using set method
-    res.set("Content-Type", "image/jpg");
+    res.set("Content-Type", "image/png");
 
     res.send(user.avatar);
   } catch (e) {
