@@ -1,12 +1,17 @@
 const sgMail = require("@sendgrid/mail");
-const sendgridAPIKey =
-  "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";
+const sendgridAPIKey = "LOL-i've-been-refused";
 
 sgMail.setApiKey(sendgridAPIKey);
 
-sgMail.send({
-  to: "g.borot@gmail.com",
-  from: "g.borot@gmail.com",
-  subject: "This is my first email!",
-  text: "I hope this email gets to you"
-});
+const sendWelcomeEmail = (email, name) => {
+  sgMail.send({
+    to: email,
+    from: "gg.borot@gmail.com",
+    subject: "Thanks for joining in!",
+    text: `Welcome to the app, ${name}. Let me know how you get along with the app.`
+  });
+};
+
+module.exports = {
+  sendWelcomeEmail
+};
